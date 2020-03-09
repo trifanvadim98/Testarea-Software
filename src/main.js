@@ -1,13 +1,15 @@
 import Vue from 'vue'
 import App from './App.vue'
 import * as firebase from 'firebase'
-import { config } from './firebase/firebase_configs'
+import { firebaseConfig } from './firebase/firebase_configs'
+import vuetify from './plugins/vuetify';
 
-firebase.initializeApp(config);
+firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 Vue.prototype.$firebase = firebase;
 Vue.config.productionTip = false
 
 new Vue({
-  render: h => h(App),
+  vuetify,
+  render: h => h(App)
 }).$mount('#app')
