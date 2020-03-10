@@ -6,13 +6,43 @@
       right
     >
       <v-list dense>
-        <v-list-item link>
+        <v-list-item link to="/">
           <v-list-item-action>
             <v-icon>mdi-home</v-icon>
           </v-list-item-action>
 
           <v-list-item-content>
             <v-list-item-title>Home</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item link to="/list">
+          <v-list-item-action>
+            <v-icon>mdi-format-list-bulleted-square</v-icon>
+          </v-list-item-action>
+
+          <v-list-item-content>
+            <v-list-item-title>List</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+       <v-list-item link :to="{ name: 'login' }">
+          <v-list-item-action>
+            <v-icon>mdi-login-variant</v-icon>
+          </v-list-item-action>
+
+          <v-list-item-content>
+            <v-list-item-title>Login</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item link>
+          <v-list-item-action>
+            <v-icon>mdi-account-plus-outline</v-icon>
+          </v-list-item-action>
+
+          <v-list-item-content>
+            <v-list-item-title>Authentification</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
@@ -35,7 +65,7 @@
     >
       <v-spacer />
 
-      <v-toolbar-title>Application</v-toolbar-title>
+      <v-toolbar-title>LAV</v-toolbar-title>
 
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
     </v-app-bar>
@@ -49,39 +79,14 @@
           align="center"
           justify="center"
         >
-          <v-col class="text-center">
-            <v-tooltip left>
-              <template v-slot:activator="{ on }">
-                <v-btn
-                  :href="source"
-                  icon
-                  large
-                  target="_blank"
-                  v-on="on"
-                >
-                  <v-icon large>mdi-code-tags</v-icon>
-                </v-btn>
-              </template>
-
-              <span>Source</span>
-            </v-tooltip>
-
-            <v-tooltip right>
-              <template v-slot:activator="{ on }">
-                <v-btn
-                  icon
-                  large
-                  href="https://codepen.io/johnjleider/pen/WVbPgz"
-                  target="_blank"
-                  v-on="on"
-                >
-                  <v-icon large>mdi-codepen</v-icon>
-                </v-btn>
-              </template>
-
-              <span>Codepen</span>
-            </v-tooltip>
-          </v-col>
+        <v-col
+            cols="12"
+            sm="12"
+            md="12"
+            class="mx-auto"
+        >
+        <router-view />
+        </v-col>
         </v-row>
       </v-container>
     </v-content>
@@ -92,14 +97,14 @@
     >
       <v-spacer />
 
-      <span class="white--text">&copy; 2019</span>
+      <span class="white--text">&copy; Reserved by LAV in 2020</span>
     </v-footer>
   </v-app>
 </template>
 
 <script>
   export default {
-    name: 'LayoutsDemosBaselineFlipped',
+    name: 'login',
     props: {
       source: String,
     },
