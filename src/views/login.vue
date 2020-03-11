@@ -2,7 +2,7 @@
 <template>
     <v-content>
       <v-container
-        class="fill-height"
+        class="logintab"
         fluid
       >
         <v-row
@@ -82,3 +82,9 @@
     },
   }
 </script>
+<style scoped>
+#logintab{
+height: 230px;
+width: 230px;
+}
+</style>

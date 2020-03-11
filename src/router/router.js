@@ -1,8 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Home from "../components/HelloWorld";
-// import List from "@/views/list";
-import List from "../views/list.vue";
+import Main from "../views/Home";
 
 Vue.use(Router);
 export default new Router({
@@ -12,7 +10,7 @@ export default new Router({
       {
         path: "/",
         name: "home",
-        component: Home
+        component: Main
       },
       {
         path: "/login",
@@ -22,7 +20,7 @@ export default new Router({
       {
         path: "/list",
         name: "list",
-        component: List
+        component: () => import(/* webpackChunkName: "about" */ '../views/list.vue')
       }
     ]
 });

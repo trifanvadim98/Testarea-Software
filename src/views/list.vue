@@ -2,6 +2,7 @@
   <v-card
     class="mx-auto"
   >
+  <FilterComponent/>
     <v-list three-line>
       <template v-for="(item, index) in items">
         <v-subheader
@@ -19,7 +20,7 @@
         <v-list-item
           v-else
           :key="item.title"
-          @click="getSomthing"
+          @click="x = true"
         >
           <v-list-item-avatar>
             <v-img :src="item.avatar"></v-img>
@@ -36,9 +37,14 @@
 </template>
 
 <script>
+  import FilterComponent from "../components/filter"
   export default {
-    name: "list",
+    name: 'list',
+    components: {
+      FilterComponent
+    },
     data: () => ({
+      x: false,
       items: [
         { header: 'Today' },
         {

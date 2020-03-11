@@ -1,7 +1,7 @@
 <template>
   <v-app id="inspire">
     <v-navigation-drawer
-      v-model="drawer"
+      v-if="drawer"
       app
       right
     >
@@ -16,7 +16,7 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item link to="/list">
+         <v-list-item link to="/list">
           <v-list-item-action>
             <v-icon>mdi-format-list-bulleted-square</v-icon>
           </v-list-item-action>
@@ -65,12 +65,12 @@
     >
       <v-spacer />
 
-      <v-toolbar-title>LAV</v-toolbar-title>
+      <v-toolbar-title>Application</v-toolbar-title>
 
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
     </v-app-bar>
 
-    <v-content>
+    <v-content style="padding: 6px 6px 0px 0px;">
       <v-container
         class="fill-height"
         fluid
@@ -79,14 +79,9 @@
           align="center"
           justify="center"
         >
-        <v-col
-            cols="12"
-            sm="12"
-            md="12"
-            class="mx-auto"
-        >
-        <router-view />
-        </v-col>
+          <v-col class="text-center">
+            <router-view/>
+          </v-col>
         </v-row>
       </v-container>
     </v-content>
@@ -97,19 +92,25 @@
     >
       <v-spacer />
 
-      <span class="white--text">&copy; Reserved by LAV in 2020</span>
+      <span class="white--text">&copy;  Reserved by LAV in 2020</span>
     </v-footer>
   </v-app>
 </template>
 
 <script>
   export default {
-    name: 'login',
+    name: 'MainView',
     props: {
       source: String,
     },
     data: () => ({
-      drawer: null,
+      drawer: true,
     }),
   }
 </script>
+<style scoped>
+#main-router-view{
+  margin-top: 30px;
+  padding: 0%;
+}
+</style>
