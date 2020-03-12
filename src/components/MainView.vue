@@ -26,6 +26,16 @@
           </v-list-item-content>
         </v-list-item>
 
+        <v-list-item link :to="{ name: 'form' }">
+          <v-list-item-action>
+            <v-icon>mdi-briefcase-plus</v-icon>
+          </v-list-item-action>
+
+          <v-list-item-content>
+            <v-list-item-title>Add Formulair</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
        <v-list-item link :to="{ name: 'login' }">
           <v-list-item-action>
             <v-icon>mdi-login-variant</v-icon>
@@ -36,7 +46,7 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item link>
+        <v-list-item link :to="{ name: 'registration' }">
           <v-list-item-action>
             <v-icon>mdi-account-plus-outline</v-icon>
           </v-list-item-action>
@@ -48,20 +58,11 @@
 
         <v-list-item link>
           <v-list-item-action>
-            <v-icon>mdi-contact-mail</v-icon>
+            <v-icon>mdi-book-open-variant</v-icon>
           </v-list-item-action>
 
           <v-list-item-content>
             <v-list-item-title>Contacts</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-				<v-list-item link :to="{ name: 'form' }">
-          <v-list-item-action>
-            <v-icon>playlist-add</v-icon>
-          </v-list-item-action>
-
-          <v-list-item-content>
-            <v-list-item-title>Add Formulair</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
