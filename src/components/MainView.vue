@@ -52,7 +52,16 @@
           </v-list-item-action>
 
           <v-list-item-content>
-            <v-list-item-title>Contact</v-list-item-title>
+            <v-list-item-title>Contacts</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+				<v-list-item link :to="{ name: 'form' }">
+          <v-list-item-action>
+            <v-icon>playlist-add</v-icon>
+          </v-list-item-action>
+
+          <v-list-item-content>
+            <v-list-item-title>Add Formulair</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>

@@ -21,6 +21,11 @@ export default new Router({
         path: "/list",
         name: "list",
         component: () => import(/* webpackChunkName: "about" */ '../views/list.vue')
-      }
+			},
+			{
+        path: "/form",
+        name: "form",
+        component: () => import(/* webpackChunkName: "about" */ '../views/AddForm.vue')
+			}
     ]
 });
