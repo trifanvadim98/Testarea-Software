@@ -36,16 +36,6 @@
           </v-list-item-content>
         </v-list-item>
 
-       <v-list-item link :to="{ name: 'login' }">
-          <v-list-item-action>
-            <v-icon>mdi-login-variant</v-icon>
-          </v-list-item-action>
-
-          <v-list-item-content>
-            <v-list-item-title>Login</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-
         <v-list-item link :to="{ name: 'registration' }">
           <v-list-item-action>
             <v-icon>mdi-account-plus-outline</v-icon>
@@ -63,6 +53,16 @@
 
           <v-list-item-content>
             <v-list-item-title>Contacts</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item @click="logout">
+          <v-list-item-action>
+            <v-icon>mdi-logout-variant</v-icon>
+          </v-list-item-action>
+
+          <v-list-item-content>
+            <v-list-item-title>Logout</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -108,6 +108,8 @@
 </template>
 
 <script>
+import * as firebase from 'firebase'
+
   export default {
     name: 'MainView',
     props: {
@@ -116,6 +118,17 @@
     data: () => ({
       drawer: true,
     }),
+    methods:{
+      logout(){
+        firebase.auth().signOut().then(function() {
+         this.emitEvent()}).catch(function(error) {
+    this.emitEvent()
+  });
+      },
+      emitEvent(){
+          this.$emit('signedOut')
+      }
+    }
   }
 </script>
 <style scoped>

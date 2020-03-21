@@ -13,5 +13,6 @@ Vue.config.productionTip = false
 new Vue({
   router,
   vuetify,
+  firebase,
   render: h => h(App)
 }).$mount('#app')
