@@ -20,6 +20,8 @@
     "@nuxtjs/vuetify": "^1.11.0",
     "@vue/cli-plugin-babel": "^4.2.0",
     "@vue/cli-service": "^4.2.0",
+    "css-loader": "^3.4.2",
+    "material-design-icons-iconfont": "^5.0.1",
     "sass": "^1.25.0",
     "sass-loader": "^8.0.2",
     "vue-cli-plugin-vuetify": "^2.0.5",
