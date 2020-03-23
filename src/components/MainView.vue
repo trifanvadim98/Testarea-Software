@@ -75,9 +75,9 @@
     >
       <v-spacer />
 
-      <v-toolbar-title>Application</v-toolbar-title>
+      <v-toolbar-title>LAV</v-toolbar-title>
 
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" v-if="this.$store.getters.user"/>
     </v-app-bar>
 
     <v-content style="padding: 6px 6px 0px 0px;">
@@ -116,17 +116,11 @@ import * as firebase from 'firebase'
       source: String,
     },
     data: () => ({
-      drawer: true,
+      drawer: fasle,
     }),
     methods:{
       logout(){
-        firebase.auth().signOut().then(function() {
-         this.emitEvent()}).catch(function(error) {
-    this.emitEvent()
-  });
-      },
-      emitEvent(){
-          this.$emit('signedOut')
+      this.$store.dispatch('signOutAction')
       }
     }
   }

@@ -29,6 +29,7 @@
                       large
                       target="_blank"
                       v-on="on"
+                      to="/registration"
                     >
                       <v-icon>mdi-account-plus-outline</v-icon>
                     </v-btn>
@@ -39,9 +40,9 @@
               <v-card-text>
                 <v-form>
                   <v-text-field
-                    label="Login"
+                    label="E-mail"
                     name="login"
-                    v-model="login"
+                    v-model="email"
                     prepend-icon="mdi-account"
                     type="text"
                   />
@@ -73,21 +74,18 @@ import * as firebase from 'firebase'
     name: "login",
     data() {
       return {
-      login: "",
+      email: "",
       password: "",
       user: Boolean
       }
     },
   methods: {
-  authentification: function(){firebase.auth().signInWithEmailAndPassword(this.login, this.password).then(
-        this.$emit('logedIn', this.user = firebase.auth().currentUser), this.$router.push({ name: "home" }), console.log("loged in with succes")
-        ).catch(function(error) {
-  // Handle Errors here.
-  var errorCode = error.code;
-  var errorMessage = error.message;
-  console.log(errorMessage)
-  // ...
-});
+  authentification: function(){
+          const user = {
+        email: this.email,
+        password: this.password
+      }
+      this.$store.dispatch('signInAction', user)
   }
   }
   }
