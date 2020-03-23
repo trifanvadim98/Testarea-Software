@@ -13,7 +13,7 @@ export default new Router({
         name: "home",
         component: Main,
         beforeEnter: (to, from, next) => {
-          if (to.name !== 'login' && !store.getters.user) {next({ name: 'login' })}
+          if (to.name !== 'login' && (store.getters.user == null || store.getters.user == undefined)) {next({ name: 'login' })}
           else next()
         }
       },
@@ -31,7 +31,7 @@ export default new Router({
         name: "list",
         component: () => import(/* webpackChunkName: "about" */ '../views/list.vue'),
         beforeEnter: (to, from, next) => {
-          if (to.name !== 'login' &&  !store.getters.user) next({ name: 'login' })
+          if (to.name !== 'login' &&  (store.getters.user == null || store.getters.user == undefined)) next({ name: 'login' })
           else next()
         }
 			},
@@ -40,7 +40,7 @@ export default new Router({
         name: "form",
         component: () => import(/* webpackChunkName: "about" */ '../views/AddForm.vue'),
         beforeEnter: (to, from, next) => {
-          if (to.name !== 'login' && !store.getters.user) next({ name: 'login' })
+          if (to.name !== 'login' && (store.getters.user == null || store.getters.user == undefined)) next({ name: 'login' })
           else next()
         }
 			},

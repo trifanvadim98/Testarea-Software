@@ -111,7 +111,19 @@ export default {
     notificationMessage: "",
     itShowPassword: false,
     itShowConfirmPassword: false							
-	 }),
+   }),
+   mounted:{
+     user(){
+       return this.$store.getters.user
+     }
+   },
+   watch:{
+     user(value){
+       if (value !== null && value !== undefined){
+         
+       }
+     }
+   },
 	   methods: {
     async signUp() {
       this.loading = true;

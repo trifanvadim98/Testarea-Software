@@ -116,11 +116,13 @@ import * as firebase from 'firebase'
       source: String,
     },
     data: () => ({
-      drawer: fasle,
+      drawer: false,
     }),
     methods:{
       logout(){
       this.$store.dispatch('signOutAction')
+      this.$router.push({ name: "login" })
+      return this.drawer = false
       }
     }
   }
