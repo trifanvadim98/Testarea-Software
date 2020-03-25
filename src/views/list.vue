@@ -1,44 +1,55 @@
 <template>
   <v-card
+    max-width="900"
     class="mx-auto"
   >
-  <FilterComponent @CA="getCouncils('Consiliui de Administrare (CA)')" 
+  
+     <FilterComponent @CA="getCouncils('Consiliui de Administrare (CA)')" 
     @CC="getCouncils('Comisiei de Cenzori (CC)')" 
     @CSL="getCouncils('Comisiei de Solutionare a Litigiilor (CSL)')"/>
-    <v-list three-line>
-      <template v-for="(item, index) in items">
-        <v-subheader
-          v-if="item.header"
-          :key="item.header"
-          v-text="item.header"
-        ></v-subheader>
+    <v-list two-line>
+      <v-list-item-group
+        v-model="selected"
+        multiple
+        active-class="dark--text"
+      >
+        <template v-for="(item, index) in items">
+          <v-list-item :key="item.info.name">
+            <template v-slot:default="{ active }">
+              <v-list-item-content>
+                <v-list-item-title v-text="department"></v-list-item-title>
+                <v-list-item-subtitle class="text--primary" v-text="'Nume:' + item.info.name+' '+'prenume:'+item.info.surname"></v-list-item-subtitle>
+                <v-list-item-subtitle v-text="item.info.createdAt"></v-list-item-subtitle>
+              </v-list-item-content>
 
-        <v-divider
-          v-else-if="item.divider"
-          :key="index"
-          :inset="item.inset"
-        ></v-divider>
+              <v-list-item-action>
+                <v-list-item-action-text v-text="item.action"></v-list-item-action-text>
+                <v-icon
+                  v-if="!active"
+                  color="grey lighten-1"
+                >
+                  mdi-star-outline
+                </v-icon>
 
-        <v-list-item
-          v-else
-          :key="item.idnp"
-          @click="x = true"
-        >
-          <v-list-item-avatar>
-            <v-img :src="item.avatar"></v-img>
-          </v-list-item-avatar>
+                <v-icon
+                  v-else
+                  color="yellow"
+                >
+                  mdi-star
+                </v-icon>
+              </v-list-item-action>
+            </template>
+          </v-list-item>
 
-          <v-list-item-content>
-            <v-list-item-title v-html="item.idnp"></v-list-item-title>
-            <v-list-item-subtitle v-html="item.info.name"></v-list-item-subtitle>
-            <v-list-item-action-text v-html="item.info.comments"></v-list-item-action-text>
-          </v-list-item-content>
-        </v-list-item>
-      </template>
+          <v-divider
+            v-if="index + 1 < items.length"
+            :key="index"
+          ></v-divider>
+        </template>
+      </v-list-item-group>
     </v-list>
   </v-card>
 </template>
-
 <script>
   import FilterComponent from "../components/filter"
   export default {
@@ -48,27 +59,29 @@
     },
     data: () => ({
       x: false,
-      items: null
+      items: null,
+      selected: [2],
+      department: "",
+      dropdown: false,
     }),
     methods: {
       getCouncils(collectionTarget){
-        console.log("before firebase")
-        var data = []
-    this.$firebase.firestore().collection(collectionTarget)
-    .get()
-    .then(function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
-            // doc.data() is never undefined for query doc snapshots 
-            console.log(doc.id, " => ", doc.data());
-            let x = {idnp: doc.id, info: doc.data()}
-            data.push(x)
-        });
-    })
-    .catch(function(error) {
-        console.log("Error getting documents: ", error);
-    });
-    this.items = data
-    }
+        let data = [];
+        this.$firebase.firestore().collection(collectionTarget)
+          .get()
+          .then(function(querySnapshot) {
+              querySnapshot.forEach(function(doc) {
+                  // doc.data() is never undefined for query doc snapshots 
+                  let x = {idnp: doc.id, info: doc.data()}
+                  data.push(x)
+              });
+          })
+          .catch(function(error) {
+              console.log("Error getting documents: ", error);
+          })
+          this.items = data
+          this.department = collectionTarget
+          }
     }
   }
 </script>

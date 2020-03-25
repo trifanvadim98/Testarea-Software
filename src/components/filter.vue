@@ -27,8 +27,11 @@
       name: 'FilterComponent',
     data () {
       return {
-        activeBtn: 1,
+        activeBtn: 0,
       }
+    },
+    created(){
+       this.sendCaEvent()
     },
     methods: {
       sendCcEvent(){
