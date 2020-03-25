@@ -8,6 +8,11 @@
 				Ordin de creare a Organelor Asociatiilor
 				</v-toolbar-title>
 				</v-card-title>
+				<v-form
+				ref="addform"
+    		v-model="valid"
+    		lazy-validation
+				>
 			<v-col cols="12" lg="6">
 				<v-menu
           ref="menu1"
@@ -37,6 +42,7 @@
      								 class="my-2"
                       v-model="form.organ"
     								 :items="form.items"
+										 :rules="[v => !!v || 'Organ is required']"
      								 label="Denumirea Organului AUAI"
      								 dense
     							></v-overflow-btn>
@@ -45,6 +51,9 @@
 			<v-col cols="12" md="6" sm="6">
 			  			<v-text-field
                 v-model="form.firstName"
+								:counter="25"
+								v-validate="{ min: 2, max: 25 }"
+								:rules="fnameRules"
                 data-vv-name="firstName"
                 label="First name"
                 required
@@ -53,6 +62,9 @@
 							<v-col cols="12" md="6" sm="6">
 								<v-text-field
                 v-model="form.lastName"
+								v-validate="{ min: 2, max: 25 }"
+								:counter="25"
+								:rules="lnameRules"
                 data-vv-name="lastName"
                 label="Last name"
                 required
@@ -63,6 +75,8 @@
 							<v-col cols="12" md="8" lg="6">
 								<v-text-field
                 v-model="form.idnp"
+								:rules="idnpRules"
+								:counter="9"
                 data-vv-name="IDNP"
                 label="IDNP"
                 required
@@ -82,6 +96,7 @@
                   v-model="start"
 									label="Data inceperii mandatului"
 									hint="MM/DD/YYYY"
+									:rules="beginRules"
 									></v-text-field>
 								</v-col>
 								<v-col cols="12" md="4" sm="4">
@@ -89,6 +104,7 @@
                   v-model="finish"
 									label="Data finalizarii mandatului"
 									hint="MM/DD/YYYY"
+									:rules="endRules"
 									></v-text-field>
 								</v-col>
 							</v-layout>
@@ -118,6 +134,7 @@
 				</v-col>
 			</v-layout>
     </v-card-actions>
+				</v-form>
   </v-card>
 </template>
 <script>
@@ -128,15 +145,37 @@ export default {
       menu2: false,
 			 form: {
       organ: "",
-      firstName: "",
-      lastName: "",
+			firstName: "",
+			 fnameRules: [
+        v => !!v || 'Name is required',
+        v => (v && v.length <= 25) || 'First Name must be less than 25 characters',
+      ],
+			lastName: "",
+			lnameRules: [
+        v => !!v || 'Last Name is required',
+        v => (v && v.length <= 25) || 'Last Name must be less than 25 characters',
+      ],
       dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)),
       finish : "0.0.0",
-      lasting: "2",
-      start: "1.1.1",
-      idnp: "b01020192",
+			lasting: "2",
+				endRules: [
+        v => !!v || 'Date is required',
+        v => /.+\+.\./.test(v) || 'Date must be valid',
+      ],
+			start: "1.1.1",
+			beginRules: [
+        v => !!v || 'Date is required',
+        v => /.+\+.\./.test(v) || 'Date must be valid',
+      ],
+			idnp: "b01020192",
+			idnpRules: [
+				v => !!v || 'IDNP is required',
+        v => (v && v.length <= 9) || 'IDNP must be less than 9 characters',
+			],
       items: [ 'Consiliui de Administrare (CA)','Comisiei de Cenzori (CC)', 'Comisiei de Solutionare a Litigiilor (CSL)'],
-      comment: ""
+			comment: "",
+			 valid: true,
+
     }
     }),
 		
