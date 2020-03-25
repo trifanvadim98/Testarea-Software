@@ -2,7 +2,9 @@
   <v-card
     class="mx-auto"
   >
-  <FilterComponent/>
+  <FilterComponent @CA="getCouncils('Consiliui de Administrare (CA)')" 
+    @CC="getCouncils('Comisiei de Cenzori (CC)')" 
+    @CSL="getCouncils('Comisiei de Solutionare a Litigiilor (CSL)')"/>
     <v-list three-line>
       <template v-for="(item, index) in items">
         <v-subheader
@@ -19,7 +21,7 @@
 
         <v-list-item
           v-else
-          :key="item.title"
+          :key="item.idnp"
           @click="x = true"
         >
           <v-list-item-avatar>
@@ -27,8 +29,9 @@
           </v-list-item-avatar>
 
           <v-list-item-content>
-            <v-list-item-title v-html="item.title"></v-list-item-title>
-            <v-list-item-subtitle v-html="item.subtitle"></v-list-item-subtitle>
+            <v-list-item-title v-html="item.idnp"></v-list-item-title>
+            <v-list-item-subtitle v-html="item.info.name"></v-list-item-subtitle>
+            <v-list-item-action-text v-html="item.info.comments"></v-list-item-action-text>
           </v-list-item-content>
         </v-list-item>
       </template>
@@ -45,38 +48,27 @@
     },
     data: () => ({
       x: false,
-      items: [
-        { header: 'Today' },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-          title: 'Brunch this weekend?',
-          subtitle: "<span class='text--primary'>Ali Connors</span> &mdash; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?",
-        },
-        { divider: true, inset: true },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
-          title: 'Summer BBQ <span class="grey--text text--lighten-1">4</span>',
-          subtitle: "<span class='text--primary'>to Alex, Scott, Jennifer</span> &mdash; Wish I could come, but I'm out of town this weekend.",
-        },
-        { divider: true, inset: true },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
-          title: 'Oui oui',
-          subtitle: "<span class='text--primary'>Sandra Adams</span> &mdash; Do you have Paris recommendations? Have you ever been?",
-        },
-        { divider: true, inset: true },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
-          title: 'Birthday gift',
-          subtitle: "<span class='text--primary'>Trevor Hansen</span> &mdash; Have any ideas about what we should get Heidi for her birthday?",
-        },
-        { divider: true, inset: true },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/5.jpg',
-          title: 'Recipe to try',
-          subtitle: "<span class='text--primary'>Britta Holt</span> &mdash; We should eat this: Grate, Squash, Corn, and tomatillo Tacos.",
-        },
-      ],
+      items: null
     }),
+    methods: {
+      getCouncils(collectionTarget){
+        console.log("before firebase")
+        var data = []
+    this.$firebase.firestore().collection(collectionTarget)
+    .get()
+    .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+            // doc.data() is never undefined for query doc snapshots 
+            console.log(doc.id, " => ", doc.data());
+            let x = {idnp: doc.id, info: doc.data()}
+            data.push(x)
+        });
+    })
+    .catch(function(error) {
+        console.log("Error getting documents: ", error);
+    });
+    this.items = data
+    }
+    }
   }
 </script>

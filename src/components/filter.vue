@@ -5,17 +5,17 @@
     color="teal"
     class="filter-position"
   >
-    <v-btn>
+    <v-btn @click="sendCaEvent">
       <span>CA</span>
       <v-icon>mdi-brain</v-icon>
     </v-btn>
 
-    <v-btn>
+    <v-btn @click="sendCcEvent">
       <span>CC</span>
       <v-icon>mdi-account-multiple-check</v-icon>
     </v-btn>
 
-    <v-btn>
+    <v-btn @click="sendCslEvent">
       <span>CSL</span>
       <v-icon>mdi-map-marker</v-icon>
     </v-btn>
@@ -30,6 +30,17 @@
         activeBtn: 1,
       }
     },
+    methods: {
+      sendCcEvent(){
+          this.$emit('CC')
+      },
+      sendCaEvent(){
+        this.$emit('CA')
+      },
+      sendCslEvent(){
+        this.$emit('CSL')
+      }
+    }
   }
 </script>
 <style>

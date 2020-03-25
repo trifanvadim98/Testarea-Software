@@ -20,7 +20,7 @@
         >
           <template v-slot:activator="{ on }">
             <v-text-field
-              v-model="dateFormatted"
+              v-model="date"
               label="Data Document"
               hint="MM/DD/YYYY"
               persistent-hint
@@ -35,7 +35,8 @@
 			<v-col cols="12" lg="7">
 								 <v-overflow-btn
      								 class="my-2"
-    								 :items="items"
+                      v-model="form.organ"
+    								 :items="form.items"
      								 label="Denumirea Organului AUAI"
      								 dense
     							></v-overflow-btn>
@@ -44,7 +45,6 @@
 			<v-col cols="12" md="6" sm="6">
 			  			<v-text-field
                 v-model="form.firstName"
-                v-validate="{ min: 2, max: 25 }"
                 data-vv-name="firstName"
                 label="First name"
                 required
@@ -53,7 +53,6 @@
 							<v-col cols="12" md="6" sm="6">
 								<v-text-field
                 v-model="form.lastName"
-                v-validate="{ min: 2, max: 25 }"
                 data-vv-name="lastName"
                 label="Last name"
                 required
@@ -63,8 +62,7 @@
 			<v-layout justify-center>
 							<v-col cols="12" md="8" lg="6">
 								<v-text-field
-                v-model="form.IDNP"
-                v-validate="{ min: 2, max: 25 }"
+                v-model="form.idnp"
                 data-vv-name="IDNP"
                 label="IDNP"
                 required
@@ -74,31 +72,30 @@
 							<v-layout> 
 								<v-col cols="12" md="4" sm="4">
 									<v-text-field
+                  v-model="lasting"
 									label="Durata mandatului (ani)"
 									required
 									></v-text-field>
 								</v-col>
 								<v-col cols="12" md="4" sm="4">
 									<v-text-field
+                  v-model="start"
 									label="Data inceperii mandatului"
 									hint="MM/DD/YYYY"
 									></v-text-field>
 								</v-col>
 								<v-col cols="12" md="4" sm="4">
 									<v-text-field
+                  v-model="finish"
 									label="Data finalizarii mandatului"
 									hint="MM/DD/YYYY"
 									></v-text-field>
 								</v-col>
 							</v-layout>
 							  <v-col cols="12" >
-          <!-- <v-text-field
-            label="Note"
-            outlined
-            dense
-          ></v-text-field> -->
 					<v-textarea
               color="cyan"
+              v-model="form.comment"
             >
               <template v-slot:label>
                 <div>
@@ -112,8 +109,9 @@
 				<v-col cols="12" md="4" sm="4">
       <v-btn
         color="info"
-				outline
+				outlined
 				width="50%"
+        @click="writeFormDatesInFirebase"
       >
 			ADD +
       </v-btn>
@@ -126,44 +124,57 @@
 export default {
 	data: vm => ({
       date: new Date().toISOString().substr(0, 10),
-      dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)),
       menu1: false,
       menu2: false,
-			items: [ 'Consiliui de Administrare (CA)','Comisiei de Cenzori (CC)', 'Comisiei de Solutionare a Litigiilor (CSL)'],
 			 form: {
+      organ: "",
       firstName: "",
-			lastName: "",
-			IDNP: ""
-    },
-		}),
+      lastName: "",
+      dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)),
+      finish : "0.0.0",
+      lasting: "2",
+      start: "1.1.1",
+      idnp: "b01020192",
+      items: [ 'Consiliui de Administrare (CA)','Comisiei de Cenzori (CC)', 'Comisiei de Solutionare a Litigiilor (CSL)'],
+      comment: ""
+    }
+    }),
 		
-
     computed: {
       computedDateFormatted () {
         return this.formatDate(this.date)
       },
     },
-
     watch: {
       date (val) {
         this.dateFormatted = this.formatDate(this.date)
       },
     },
-
     methods: {
       formatDate (date) {
         if (!date) return null
-
         const [year, month, day] = date.split('-')
         return `${month}/${day}/${year}`
       },
       parseDate (date) {
         if (!date) return null
-
         const [month, day, year] = date.split('/')
         return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
       },
+      writeFormDatesInFirebase(){
+        this.$firebase.firestore().collection(this.form.organ).doc(this.form.idnp).set({
+      comments: this.form.comment,
+      createdAt: this.form.dateFormatted,
+      finish : this.form.finish,
+      lasting: this.form.lasting,
+      name: this.form.firstName,
+      start: this.form.start,
+      surname: this.form.lastName
+  })
+  .then(function(){
+    alert("item aded with succes!!")
+  })
+  }
     },
   }
-
 </script>

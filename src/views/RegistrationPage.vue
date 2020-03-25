@@ -105,7 +105,9 @@ export default {
       email: "",
       password: "",
       confirmpassword: ""
-		},
+    },
+    actionCodeSettings: {
+      url: "https://qa-labs-35bb1.web.app/login"},
 		loading: false,
     notification: false,
     notificationMessage: "",
@@ -130,13 +132,15 @@ export default {
       try {
         await this.$store.dispatch("signUpAction", {
           email: this.form.email,
-          password: this.form.password
+          password: this.form.password,
+          actionCodeSettings: this.actionCodeSettings
+
         });
+      this.loading = false;
         this.$router.push({ name: "home" });
       } catch (e) {
-        this.showNotification(e);
+        alert(e);
       }
-      this.loading = false;
     },
     showNotification(e) {
       this.notification = true;
