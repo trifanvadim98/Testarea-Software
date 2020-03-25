@@ -6,7 +6,6 @@ import { firebaseConfig } from './firebase/firebase_configs';
 import vuetify from './plugins/vuetify';
 import store from '@/store';
 import VueSession from 'vue-session';
-
 Vue.use(VueSession)
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
@@ -18,6 +17,6 @@ new Vue({
   router,
   store,
   vuetify,
-  firebase,
+	firebase,
   render: h => h(App)
 }).$mount('#app')
