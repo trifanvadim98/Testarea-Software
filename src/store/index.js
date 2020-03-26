@@ -41,12 +41,14 @@ export default new Vuex.Store({
           // response will have user
           // user will have uid will be updated to the state
           commit('setUser', response.user.uid)
+          router.push({ name: "login" })
           commit('setStatus', 'success')
           commit('setError', null)
         })
         .catch((error) => {
           commit('setStatus', 'failure')
           commit('setError', error.message)
+          alert(error.message)
         })
     },
 

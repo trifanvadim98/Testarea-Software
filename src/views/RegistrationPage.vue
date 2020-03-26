@@ -137,7 +137,6 @@ export default {
 
         });
       this.loading = false;
-        this.$router.push({ name: "home" });
       } catch (e) {
         alert(e);
       }
