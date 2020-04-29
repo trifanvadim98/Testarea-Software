@@ -8,11 +8,9 @@
               <v-toolbar class="cyan" height="80px">
                 <v-layout row justify-content-end>
                   <v-card-title>
-                    <router-link :to="{ name: 'login' }">
-                      <v-btn dark icon>
+                      <v-btn dark icon :to="{ name: 'login' }">
                         <v-icon class="icon">mdi-chevron-left</v-icon>
                       </v-btn>
-                    </router-link>
                     <v-toolbar-title
                       class="text"
                       font-weight-medium.font-italic
@@ -34,9 +32,9 @@
 										 		<v-layout row>
                   						<v-text-field
                   						  v-model="form.email"
-                  						  v-validate="{ min: 5, max: 25 }"
+                  						  v-validate="{ min: 5}"
                   						  :disablef="loading"
-                  						  :counter="25"
+                                :rules="emailRules"
                   						  data-vv-name="username"
                   						  label="E-mail"
                   						  required
@@ -49,7 +47,6 @@
                   							  :append-icon="itShowPassword ? 'mdi-eye' : 'mdi-eye-off'"
                   							  :type="itShowPassword ? 'text' : 'password'"
                   							  :disablef="loading"
-                  							  :counter="32"
                   							  data-vv-name="password"
                   							  label="Password"
                   							  @click:append="itShowPassword = !itShowPassword"
@@ -61,7 +58,6 @@
                   							  :append-icon=" itShowConfirmPassword ? 'mdi-eye' : 'mdi-eye-off'"
                   							  :type="itShowConfirmPassword ? 'text' : 'password'"
                   							  :disablef="loading"
-                  							  :counter="32"
                   							  data-vv-name="confirmpassword"
                   							  label="Confirm Password"
                   							  required
@@ -74,10 +70,11 @@
                   												  <v-flex xs12 lg4 xl2>
                   												    <v-btn
                   												      block
-                  												      color="info"
+                  												      color="cyan"
                   												      :loading="loading"
                   												      :disabled="loading"
                   												      @click="signUp"
+                                                style="color:white"
                   												    >
                   												      SignUp
                   												    </v-btn>
@@ -112,7 +109,11 @@ export default {
     notification: false,
     notificationMessage: "",
     itShowPassword: false,
-    itShowConfirmPassword: false							
+    itShowConfirmPassword: false,
+    emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+      ]							
    }),
    mounted:{
      user(){
@@ -150,7 +151,7 @@ export default {
     comparePassword() {
       return this.form.password !== this.form.confirmpassword
         ? "Password do not match"
-        : "";
+        : true;
 		},
 		 showNotification(e) {
       this.notification = true;

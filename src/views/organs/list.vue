@@ -11,14 +11,13 @@
       <v-list-item-group
         v-model="selected"
         multiple
-        active-class="dark--text"
       >
         <template v-for="(item, index) in items">
-          <v-list-item :key="item.info.name">
-            <template v-slot:default="{ active }">
+          <v-list-item :key="item.info">
+            <template>
               <v-list-item-content>
                 <v-list-item-title v-text="department"></v-list-item-title>
-                <v-list-item-subtitle class="text--primary" v-text="'Nume:' + item.info.name+' '+'prenume:'+item.info.surname"></v-list-item-subtitle>
+                <v-list-item-subtitle class="text--primary" v-text="'Nume: ' + item.info.name+' '+'Prenume: '+item.info.surname"></v-list-item-subtitle>
                 <v-list-item-subtitle v-text="item.info.createdAt"></v-list-item-subtitle>
               </v-list-item-content>
 
@@ -37,6 +36,11 @@
                 >
                   mdi-star
                 </v-icon>
+                 <v-icon
+                  color="yellow"
+                >
+                  mdi-card-account-details-outline
+                </v-icon>
               </v-list-item-action>
             </template>
           </v-list-item>
@@ -48,14 +52,18 @@
         </template>
       </v-list-item-group>
     </v-list>
+
+    <DetailsOrgans/>
   </v-card>
 </template>
 <script>
-  import FilterComponent from "../components/filter"
+  import FilterComponent from "../../components/filter"
+  import DetailsOrgans from "./organDetails"
   export default {
     name: 'list',
     components: {
-      FilterComponent
+      FilterComponent,
+      DetailsOrgans
     },
     data: () => ({
       x: false,
@@ -63,7 +71,12 @@
       selected: [2],
       department: "",
       dropdown: false,
+      modal: false
     }),
+    // mounted(){
+    //   this.getCouncils("Consiliui de Administrare (CA)")
+    //   console.log(this.items)
+    // },
     methods: {
       getCouncils(collectionTarget){
         let data = [];

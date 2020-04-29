@@ -9,6 +9,7 @@ export default new Vuex.Store({
 
   state: {
     user: null,
+    allData: null,
     status: null,
     error: null
 
@@ -79,7 +80,27 @@ export default new Vuex.Store({
           commit('setStatus', 'failure')
           commit('setError', error.message)
         })
-    }
+    },
+
+    writeFormAction(payload){
+      console.log(payload.organ)
+    firebase.firestore().collection(payload.organ).doc(payload.idnp).set({
+    comments: payload.comments,
+    createdAt: payload.createdAt,
+    finish: payload.finish,
+    lasting: payload.lasting,
+    name: payload.name,
+    start: payload.start,
+    surname: payload.surname
+})
+.then(function(){
+  alert("item aded with succes!!")
+  // router.push({ name: "home" })
+})
+.catch((e) => {
+  alert(e.message)
+})
+}
   },
 
   getters: {

@@ -8,7 +8,7 @@
 
 <script>
 import MainView from './components/MainView';
-import LoginView from './views/login';
+import LoginView from './views/users/login';
 
 export default {
   name: 'App',

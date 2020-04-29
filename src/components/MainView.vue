@@ -1,7 +1,7 @@
 <template>
   <v-app id="inspire">
     <v-navigation-drawer
-      v-if="drawer"
+      v-model="drawer"
       app
       right
     >

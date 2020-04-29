@@ -16,7 +16,7 @@
           >
             <v-card class="elevation-12">
               <v-toolbar
-                color="primary"
+                color="cyan"
                 dark
                 flat
               >
@@ -42,6 +42,7 @@
                   <v-text-field
                     label="E-mail"
                     name="login"
+                    :rules="emailRules"
                     v-model="email"
                     prepend-icon="mdi-account"
                     type="text"
@@ -50,6 +51,7 @@
                   <v-text-field
                     label="Password"
                     v-model="password"
+                    :rules="passwordRules"
                     name="password"
                     prepend-icon="mdi-lock"
                     type="password"
@@ -58,7 +60,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer />
-                <v-btn color="primary" @click="authentification()">Login</v-btn>
+                <v-btn color="cyan" style="color:white" @click="authentification()">Login</v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
@@ -69,14 +71,20 @@
 </template>
 
 <script>
-import * as firebase from 'firebase'
   export default {
     name: "login",
     data() {
       return {
-      email: "",
-      password: "",
-      user: Boolean
+          email: "",
+          password: "",
+          user: Boolean,
+          emailRules: [
+          v => !!v || 'E-mail is required',
+          v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+          ],
+          passwordRules: [
+            v => !!v || 'Password is required'
+          ]	
       }
     },
   methods: {
@@ -86,6 +94,25 @@ import * as firebase from 'firebase'
         password: this.password
       }
       this.$store.dispatch('signInAction', user)
+//       this.$firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
+//         localStorage.setItem('token', idToken)
+//   // Send token to your backend via HTTPS
+//   // ...
+// }).catch(function(error) {
+//   // Handle error
+// });
+
+      this.$firebase.auth().createCustomToken("fasdasdsadsad", {
+            // Add a custom claim indicating an expiration time of 30 days.
+            expiresAt: Date.now() + (1000 * 60 * 60 * 24 * 30),
+          })
+            .then((customToken) => {
+              console.log(customToken)
+              // localStorage.setItem('token', customToken)
+            })
+            .catch((error) => {
+              console.log("Failed to create custom token:", error);
+            });
   }
   }
   }

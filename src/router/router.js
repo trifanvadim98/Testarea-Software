@@ -20,7 +20,7 @@ export default new Router({
       {
         path: "/login",
         name: "login",
-        component: () => import(/* webpackChunkName: "about" */ '../views/login.vue'),
+        component: () => import(/* webpackChunkName: "about" */ '../views/users/login.vue'),
         beforeEnter: (to, from, next) => {
           if (to.name !== 'login') {next({ name: 'home' })}
           else next()
@@ -29,7 +29,7 @@ export default new Router({
       {
         path: "/list",
         name: "list",
-        component: () => import(/* webpackChunkName: "about" */ '../views/list.vue'),
+        component: () => import(/* webpackChunkName: "about" */ '../views/organs/list.vue'),
         beforeEnter: (to, from, next) => {
           if (to.name !== 'login' &&  (store.getters.user == null || store.getters.user == undefined)) next({ name: 'login' })
           else next()
@@ -38,7 +38,7 @@ export default new Router({
 			{
         path: "/form",
         name: "form",
-        component: () => import(/* webpackChunkName: "about" */ '../views/AddForm.vue'),
+        component: () => import(/* webpackChunkName: "about" */ '../views/organs/AddForm.vue'),
         beforeEnter: (to, from, next) => {
           if (to.name !== 'login' && (store.getters.user == null || store.getters.user == undefined)) next({ name: 'login' })
           else next()
@@ -47,7 +47,7 @@ export default new Router({
 			{
         path: "/registration",
         name: "registration",
-        component: () => import(/* webpackChunkName: "about" */ '../views/RegistrationPage.vue')
+        component: () => import(/* webpackChunkName: "about" */ '../views/users/RegistrationPage.vue')
 			}
     ]
 });
