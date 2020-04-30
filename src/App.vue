@@ -16,16 +16,6 @@ export default {
   components: {
     MainView,
     LoginView
-  },
-
-  data: () => ({
-    user : Boolean
-  }),
-   mounted(){
-    },
-    methods:{
-    }
-  
-  
-};
+  }
+}
 </script>

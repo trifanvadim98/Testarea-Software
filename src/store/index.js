@@ -59,8 +59,12 @@ export default new Vuex.Store({
           commit('setUser', response.user.uid)
           commit('setStatus', 'success')
           commit('setError', null)
-          router.push({ name: "home" })
-          alert("loged in succesfuly")
+          firebase.auth().currentUser.getIdToken(true).then(function(idToken){
+            localStorage.setItem("token", idToken)
+         }).catch(function (error) {
+             //Handle error
+         });
+         router.push({ name: "home" })
         })
         .catch((error) => {
           commit('setStatus', 'failure')
@@ -75,6 +79,7 @@ export default new Vuex.Store({
           commit('removeUser')
           commit('setStatus', 'success')
           commit('setError', null)
+          localStorage.removeItem("token")
         })
         .catch((error) => {
           commit('setStatus', 'failure')

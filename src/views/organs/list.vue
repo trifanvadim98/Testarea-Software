@@ -8,6 +8,11 @@
     @CC="getCouncils('Comisiei de Cenzori (CC)')" 
     @CSL="getCouncils('Comisiei de Solutionare a Litigiilor (CSL)')"/>
     <v-list two-line>
+                <v-progress-linear
+          v-if="loader==true"
+          indeterminate
+          color="cyan"
+          ></v-progress-linear>
       <v-list-item-group
         v-model="selected"
         multiple
@@ -71,16 +76,19 @@
       selected: [2],
       department: "",
       dropdown: false,
-      modal: false
+      modal: false,
+      loader: true
     }),
     // mounted(){
     //   this.getCouncils("Consiliui de Administrare (CA)")
     //   console.log(this.items)
     // },
     methods: {
-      getCouncils(collectionTarget){
+      async getCouncils(collectionTarget){
+        this.loader = true;
         let data = [];
-        this.$firebase.firestore().collection(collectionTarget)
+        try{ 
+          await this.$firebase.firestore().collection(collectionTarget)
           .get()
           .then(function(querySnapshot) {
               querySnapshot.forEach(function(doc) {
@@ -93,8 +101,11 @@
               console.log("Error getting documents: ", error);
           })
           this.items = data
+          this.loader = false
           this.department = collectionTarget
-          }
+      } catch (e) {
+        alert(e);
+      }},
     }
   }
 </script>

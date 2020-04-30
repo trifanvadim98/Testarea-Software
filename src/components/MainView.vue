@@ -12,7 +12,7 @@
           </v-list-item-action>
 
           <v-list-item-content>
-            <v-list-item-title>Home</v-list-item-title>
+            <v-list-item-title>Acasa</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
@@ -22,7 +22,7 @@
           </v-list-item-action>
 
           <v-list-item-content>
-            <v-list-item-title>List</v-list-item-title>
+            <v-list-item-title>Lista</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
@@ -32,7 +32,7 @@
           </v-list-item-action>
 
           <v-list-item-content>
-            <v-list-item-title>Add Formulair</v-list-item-title>
+            <v-list-item-title>Adaugare</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
@@ -42,17 +42,7 @@
           </v-list-item-action>
 
           <v-list-item-content>
-            <v-list-item-title>Authentification</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-
-        <v-list-item link>
-          <v-list-item-action>
-            <v-icon>mdi-book-open-variant</v-icon>
-          </v-list-item-action>
-
-          <v-list-item-content>
-            <v-list-item-title>Contacts</v-list-item-title>
+            <v-list-item-title>Autentificare</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
@@ -64,6 +54,61 @@
           <v-list-item-content>
             <v-list-item-title>Logout</v-list-item-title>
           </v-list-item-content>
+        </v-list-item>
+
+
+        <v-list-item>
+          <v-list>
+            <v-layout cols="12">
+              <v-col md="1" class="m-0">
+                <v-list-item-action>
+                  <v-icon>mdi-cellphone-android</v-icon>
+                </v-list-item-action>
+              </v-col>
+          <v-col md="11">
+            <v-list-group>
+              <template v-slot:activator>
+                <v-list-item-content>
+                  <v-list-item-title>Contacts</v-list-item-title>
+                </v-list-item-content>
+              </template>
+
+              <v-list-item>
+              <v-list-item-action>
+                  <v-icon>mdi-cellphone-android</v-icon>
+                </v-list-item-action>
+                <v-list-item-content>
+                  <v-list-item-title>078968596</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item>
+              <v-list-item-action>
+                  <v-icon>mdi-phone-classic</v-icon>
+                </v-list-item-action>
+                <v-list-item-content>
+                  <v-list-item-title>022-902-112</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item>
+              <v-list-item-action>
+                  <v-icon>mdi-fax</v-icon>
+                </v-list-item-action>
+                <v-list-item-content>
+                  <v-list-item-title>fax: 022-902-112</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item>
+              <v-list-item-action>
+                  <v-icon>mdi-email-mark-as-unread</v-icon>
+                </v-list-item-action>
+                <v-list-item-content>
+                  <v-list-item-title>112@moldova.com</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-group>
+          </v-col>
+            </v-layout>
+          </v-list>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -77,7 +122,7 @@
 
       <v-toolbar-title>LAV</v-toolbar-title>
 
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" v-if="this.$store.getters.user"/>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
     </v-app-bar>
 
     <v-content style="padding: 6px 6px 0px 0px;">

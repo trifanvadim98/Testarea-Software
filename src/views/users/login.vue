@@ -47,7 +47,6 @@
                     prepend-icon="mdi-account"
                     type="text"
                   />
-
                   <v-text-field
                     label="Password"
                     v-model="password"
@@ -71,6 +70,7 @@
 </template>
 
 <script>
+import {firebaseAuth} from "../../firebase/firebase_configs"
   export default {
     name: "login",
     data() {
@@ -94,26 +94,7 @@
         password: this.password
       }
       this.$store.dispatch('signInAction', user)
-//       this.$firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
-//         localStorage.setItem('token', idToken)
-//   // Send token to your backend via HTTPS
-//   // ...
-// }).catch(function(error) {
-//   // Handle error
-// });
-
-      this.$firebase.auth().createCustomToken("fasdasdsadsad", {
-            // Add a custom claim indicating an expiration time of 30 days.
-            expiresAt: Date.now() + (1000 * 60 * 60 * 24 * 30),
-          })
-            .then((customToken) => {
-              console.log(customToken)
-              // localStorage.setItem('token', customToken)
-            })
-            .catch((error) => {
-              console.log("Failed to create custom token:", error);
-            });
-  }
+  },
   }
   }
 </script>

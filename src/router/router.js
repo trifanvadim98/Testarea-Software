@@ -2,6 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import Main from "../views/Home";
 import store from "../store";
+// import {token} from "../plugins/tokenVariabel";
 
 Vue.use(Router);
 export default new Router({
@@ -12,10 +13,6 @@ export default new Router({
         path: "/",
         name: "home",
         component: Main,
-        beforeEnter: (to, from, next) => {
-          if (to.name !== 'login' && (store.getters.user == null || store.getters.user == undefined)) {next({ name: 'login' })}
-          else next()
-        }
       },
       {
         path: "/login",
@@ -30,17 +27,13 @@ export default new Router({
         path: "/list",
         name: "list",
         component: () => import(/* webpackChunkName: "about" */ '../views/organs/list.vue'),
-        beforeEnter: (to, from, next) => {
-          if (to.name !== 'login' &&  (store.getters.user == null || store.getters.user == undefined)) next({ name: 'login' })
-          else next()
-        }
 			},
 			{
         path: "/form",
         name: "form",
         component: () => import(/* webpackChunkName: "about" */ '../views/organs/AddForm.vue'),
         beforeEnter: (to, from, next) => {
-          if (to.name !== 'login' && (store.getters.user == null || store.getters.user == undefined)) next({ name: 'login' })
+          if (to.name !== 'login' && (localStorage.getItem("token") == null || localStorage.getItem("token") == undefined)) next({ name: 'login' })
           else next()
         }
 			},
